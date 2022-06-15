@@ -20,6 +20,6 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       - name: build
-        run: dotnet build ./src/ML-Trackingstore.Core.csproj
+        run: dotnet build ./src/ML-Trackingstore.Core/ML-Trackingstore.Core.csproj
       - name: test
         run: dotnet test .
