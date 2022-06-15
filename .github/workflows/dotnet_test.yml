@@ -22,4 +22,4 @@ jobs:
       - name: build
         run: dotnet build ./src/ML-Trackingstore.Core/ML-Trackingstore.Core.csproj
       - name: test
-        run: dotnet test .
+        run: dotnet test . --no-build
