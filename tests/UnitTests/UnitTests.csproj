@@ -17,4 +17,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ML-Trackingstore.Core\ML-Trackingstore.Core.csproj" />
+    <ProjectReference Include="..\..\src\ML-Trackingstore\ML-Trackingstore.csproj" />
+  </ItemGroup>
+
 </Project>
