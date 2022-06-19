@@ -8,6 +8,7 @@ namespace ML_Trackingstore.Configurations
     {
         public void Configure(EntityTypeBuilder<MLModel> builder)
         {
+            builder.Property(x => x.Name).HasMaxLength(255);
             builder.HasIndex(x => x.Name).IsUnique();
             builder.HasMany(x => x.Runs).WithOne(x => x.MLModel).OnDelete(DeleteBehavior.Cascade);
         }

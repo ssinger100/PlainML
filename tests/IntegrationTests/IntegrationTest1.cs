@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ML_Trackingstore;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using ML_Trackingstore.Entities;
 
 namespace IntegrationTests;
 
@@ -42,6 +43,35 @@ public class IntegrationTest1
         Assert.AreEqual(modelname, result.Name);
         Assert.AreEqual(0, result.Runs.Count);
     }
+
+    [TestMethod]
+    public async Task StartTrainingTest()
+    {
+        string modelname = "TestModel";
+
+        var parameters = new Parameter[]
+        {
+            new(){ Name = "p1", Value = 1 },
+            new(){ Name = "p2", Value = 2 }
+        };
+
+
+        var store = new MLOpsTrackingStore(_dbContextFactory);
+        store.StartRun(modelname);
+
+        await Task.Delay(10); // Heavy training
+
+        var metrics = new Metric[]
+        {
+            new(){ Name = "m1", Value = 0.45f }
+        };
+
+        await store.EndRun(modelname, parameters, null, metrics);
+
+
+    }
+
+
 
     public void Dispose() => _connection.Dispose();
 }
