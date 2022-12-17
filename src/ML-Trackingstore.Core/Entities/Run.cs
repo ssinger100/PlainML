@@ -6,7 +6,7 @@ public class Run
     public DateTimeOffset DateTimeOffset { get; set; } = DateTimeOffset.UtcNow;
     public TimeSpan Duration { get; set; }
 
-    public MLModel MLModel { get; set; } //TODO: Nullref warning
+    public Experiment MLModel { get; set; }
     public ICollection<Parameter> Parameters { get; set; } = new List<Parameter>();
     public ICollection<Parameter_StringType> Parameter_StringType { get; set; } = new List<Parameter_StringType>();
     public ICollection<Metric> Metrics { get; set; } = new List<Metric>();
