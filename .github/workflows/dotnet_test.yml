@@ -24,6 +24,6 @@ jobs:
       - name: Set dotnet SDK version
         run: dotnet new globaljson
       - name: build
-        run: dotnet build . $(${$(dotnet --version))%.*})
+        run: dotnet build .
       - name: test
         run: dotnet test . --no-build
