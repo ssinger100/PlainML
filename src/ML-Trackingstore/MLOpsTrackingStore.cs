@@ -27,16 +27,19 @@ public class MLOpsTrackingStore
 
     public async Task DeleteModel(string modelname)
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 
     public async Task<Experiment[]> GetModels()
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 
     public async Task<Experiment> GetModel(string modelname)
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 
@@ -61,7 +64,7 @@ public class MLOpsTrackingStore
         {
             _stopWatch.Stop();
 
-            
+            await Task.CompletedTask;
 
 
             _stopWatch.Reset();
@@ -75,6 +78,7 @@ public class MLOpsTrackingStore
 
     public async Task DeployRun(string modelname, Run run, string? deploymentTargetName)
     {
+        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 }
