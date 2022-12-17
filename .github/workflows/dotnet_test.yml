@@ -20,7 +20,7 @@ jobs:
    #   matrix:
    #     os: [ubuntu-latest, windows-latest, macOS-latest]
 
-    runs-on: mcr.microsoft.com/dotnet/sdk:${{matrix.version}}  # ubuntu-latest
+    runs-on: mcr.microsoft.com/dotnet/sdk:${{matrix.version}}
     strategy:
       matrix:
         version: [6.0, 7.0]
