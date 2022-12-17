@@ -4,9 +4,9 @@ using ML_Trackingstore.Entities;
 
 namespace ML_Trackingstore.Configurations
 {
-    internal class MLModelConfiguration : IEntityTypeConfiguration<MLModel>
+    internal class ExperimentConfiguration : IEntityTypeConfiguration<Experiment>
     {
-        public void Configure(EntityTypeBuilder<MLModel> builder)
+        public void Configure(EntityTypeBuilder<Experiment> builder)
         {
             builder.Property(x => x.Name).HasMaxLength(255);
             builder.HasIndex(x => x.Name).IsUnique();

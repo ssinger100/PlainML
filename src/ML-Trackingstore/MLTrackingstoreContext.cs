@@ -5,7 +5,7 @@ namespace ML_Trackingstore;
 
 public class MLTrackingstoreContext : DbContext
 {
-    public DbSet<MLModel> MLModels { get; set; } = null!;
+    public DbSet<Experiment> MLModels { get; set; } = null!;
 
     public MLTrackingstoreContext()
     {

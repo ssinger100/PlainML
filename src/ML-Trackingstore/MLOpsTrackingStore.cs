@@ -14,10 +14,10 @@ public class MLOpsTrackingStore
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<MLModel> CreateModel(string modelname)
+    public async Task<Experiment> CreateModel(string modelname)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-        var model = db.MLModels.Add(new MLModel()
+        var model = db.MLModels.Add(new Experiment()
         {
             Name = modelname
         }).Entity;
@@ -30,12 +30,12 @@ public class MLOpsTrackingStore
         throw new NotImplementedException();
     }
 
-    public async Task<MLModel[]> GetModels()
+    public async Task<Experiment[]> GetModels()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<MLModel> GetModel(string modelname)
+    public async Task<Experiment> GetModel(string modelname)
     {
         throw new NotImplementedException();
     }
