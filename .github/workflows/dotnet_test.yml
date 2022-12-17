@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: mcr.microsoft.com/dotnet/sdk  # ubuntu-latest
     strategy:
       matrix:
         dotnet-version: [ '6.0.x', '7.0.x' ] # [ '3.0', '3.1.x', '5.0.x' ]
