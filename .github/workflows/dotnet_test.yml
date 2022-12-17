@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: docker://mcr.microsoft.com/dotnet/sdk:${{ matrix.dotnet-version }}
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}      
       - uses: actions/checkout@v3
     #  - name: Setup dotnet ${{ matrix.dotnet-version }}
      #   uses: actions/setup-dotnet@v2
