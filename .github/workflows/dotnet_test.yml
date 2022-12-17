@@ -23,6 +23,6 @@ jobs:
       - name: Set dotnet SDK version
         run: dotnet new globaljson
       - name: build
-        run: dotnet build .
+        run: dotnet build . $(${$(dotnet --version))%.*})
       - name: test
         run: dotnet test . --no-build
