@@ -11,8 +11,8 @@ namespace IntegrationTests;
 [TestClass]
 public class IntegrationTest1
 {
-    SqliteConnection _connection;
-    IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
+    readonly SqliteConnection _connection;
+    readonly IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
 
     public IntegrationTest1()
     {
@@ -35,7 +35,7 @@ public class IntegrationTest1
     [TestMethod]
     public async Task CreateModelTest()
     {
-        string modelname = "TestModel";
+        string modelname = $"TestModel_{nameof(CreateModelTest)}";
 
         var store = new MLOpsTrackingStore(_dbContextFactory);
         var result = await store.GetOrCreateExperiment(modelname);
@@ -47,7 +47,7 @@ public class IntegrationTest1
     [TestMethod]
     public async Task StartTrainingTest()
     {
-        string modelname = "TestModel";
+        string modelname = $"TestModel_{nameof(StartTrainingTest)}";
 
         var parameters = new Parameter[]
         {

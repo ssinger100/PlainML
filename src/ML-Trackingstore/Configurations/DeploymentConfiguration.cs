@@ -8,6 +8,6 @@ internal class DeploymentConfiguration : IEntityTypeConfiguration<Deployment>
 {
     public void Configure(EntityTypeBuilder<Deployment> builder)
     {
-        builder.HasIndex(x => new { ExperimentId = x.ExperimentId, DeploymenttargerId = x.DeploymenttargetId,RunId = x.RunId });
+        builder.HasIndex(x => new { x.ExperimentId, DeploymenttargerId = x.DeploymenttargetId, x.RunId });
     }
 }

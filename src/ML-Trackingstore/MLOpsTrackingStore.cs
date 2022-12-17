@@ -7,7 +7,7 @@ namespace ML_Trackingstore;
 public class MLOpsTrackingStore
 {
     readonly IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
-    Stopwatch _stopWatch = new();
+    readonly Stopwatch _stopWatch = new();
 
     public MLOpsTrackingStore(IDbContextFactory<MLTrackingstoreContext> dbContextFactory)
     {
@@ -16,7 +16,7 @@ public class MLOpsTrackingStore
 
     public async Task<Experiment> GetOrCreateExperiment(string modelname, CancellationToken token = default)
     {
-        using var db = await _dbContextFactory.CreateDbContextAsync();
+        using var db = await _dbContextFactory.CreateDbContextAsync(token);
         Experiment? experiment = await db.Set<Experiment>().FirstOrDefaultAsync(x => x.Name == modelname, token);
         if (experiment != null)
         {
