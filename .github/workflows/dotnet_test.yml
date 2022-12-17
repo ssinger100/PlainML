@@ -9,7 +9,7 @@ on:
     - '**.csproj'
 
 env:
-  DOTNET_VERSION: '6.0.401' # The .NET SDK version to use
+  DOTNET_VERSION: '7.0.x' # The .NET SDK version to use
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
