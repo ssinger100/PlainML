@@ -14,15 +14,23 @@ public class MLOpsTrackingStore
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<Experiment> CreateModel(string modelname)
+    public async Task<Experiment> GetOrCreateExperiment(string modelname, CancellationToken token = default)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-        var model = db.MLModels.Add(new Experiment()
+        Experiment? experiment = await db.Set<Experiment>().FirstOrDefaultAsync(x => x.Name == modelname, token);
+        if (experiment != null)
         {
-            Name = modelname
-        }).Entity;
-        await db.SaveChangesAsync();
-        return model;
+            return experiment;
+        }
+        else
+        {
+            var model = db.MLModels.Add(new Experiment()
+            {
+                Name = modelname
+            }).Entity;
+            await db.SaveChangesAsync(token);
+            return model;
+        }        
     }
 
     public async Task DeleteModel(string modelname)

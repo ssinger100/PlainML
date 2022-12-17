@@ -38,7 +38,7 @@ public class IntegrationTest1
         string modelname = "TestModel";
 
         var store = new MLOpsTrackingStore(_dbContextFactory);
-        var result = await store.CreateModel(modelname);
+        var result = await store.GetOrCreateExperiment(modelname);
 
         Assert.AreEqual(modelname, result.Name);
         Assert.AreEqual(0, result.Runs.Count);
