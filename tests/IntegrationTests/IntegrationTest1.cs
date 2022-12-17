@@ -55,7 +55,6 @@ public class IntegrationTest1
             new(){ Name = "p2", Value = 2 }
         };
 
-
         var store = new MLOpsTrackingStore(_dbContextFactory);
         store.StartRun(modelname);
 
@@ -67,11 +66,7 @@ public class IntegrationTest1
         };
 
         await store.EndRun(modelname, parameters, null, metrics);
-
-
     }
-
-
 
     public void Dispose() => _connection.Dispose();
 }
