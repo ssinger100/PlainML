@@ -20,6 +20,8 @@ jobs:
       # You can test your matrix by printing the current dotnet version
       - name: Display dotnet version
         run: dotnet --version
+      - name: Set dotnet SDK version
+        run: dotnet new globaljson
       - name: build
         run: dotnet build .
       - name: test
