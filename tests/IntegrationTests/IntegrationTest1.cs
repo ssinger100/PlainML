@@ -25,11 +25,15 @@ public class IntegrationTest1
             .AddDbContextFactory<MLTrackingstoreContext>(options => options.UseSqlite(_connection))
             .BuildServiceProvider();
 
-        _dbContextFactory = provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();
+        _dbContextFactory = provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();        
+    }
 
-        using var context = _dbContextFactory.CreateDbContext();
+    [TestInitialize]
+    public async Task InitSQLLite()
+    {
+        using var context = await _dbContextFactory.CreateDbContextAsync();
         context.Database.EnsureCreated();
-        context.Database.Migrate();
+        context.Database.Migrate();   
     }
 
     [TestMethod]
