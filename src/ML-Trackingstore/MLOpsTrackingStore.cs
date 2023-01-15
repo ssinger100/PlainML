@@ -7,25 +7,25 @@ namespace ML_Trackingstore;
 public class MLOpsTrackingStore
 {
     readonly IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
-    Stopwatch _stopWatch = new();
+    readonly Stopwatch _stopWatch = new();
 
     public MLOpsTrackingStore(IDbContextFactory<MLTrackingstoreContext> dbContextFactory)
     {
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<Experiment> CreateModel(string modelname)
+    public async Task<Experiment> CreateModel(string experimentname)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
         var model = db.MLModels.Add(new Experiment()
         {
-            Name = modelname
+            Name = experimentname
         }).Entity;
         await db.SaveChangesAsync();
         return model;
     }
 
-    public async Task DeleteModel(string modelname)
+    public async Task DeleteModel(string experimentname)
     {
         throw new NotImplementedException();
     }
@@ -42,7 +42,7 @@ public class MLOpsTrackingStore
 
 
 
-    public void StartRun(string modelname)
+    public void StartRun(string experimentname)
     {
         if (_stopWatch.IsRunning)
         {
@@ -55,7 +55,7 @@ public class MLOpsTrackingStore
         }
     }
 
-    public async Task EndRun(string modelname, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics)
+    public async Task EndRun(string experimentname, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics)
     {
         if (_stopWatch.IsRunning)
         {
@@ -73,7 +73,7 @@ public class MLOpsTrackingStore
     }
 
 
-    public async Task DeployRun(string modelname, Run run, string? deploymentTargetName)
+    public async Task DeployRun(string experimentname, Run run, string? deploymentTargetName)
     {
         throw new NotImplementedException();
     }
