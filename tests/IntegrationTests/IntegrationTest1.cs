@@ -58,7 +58,7 @@ public class IntegrationTest1
         var store = new MLOpsTrackingStore(_dbContextFactory);
         store.StartRun(experimentName);
 
-        await Task.Delay(10); // Heavy training
+        await Task.Delay(10); // Long running training process
 
         var metrics = new Metric[]
         {
