@@ -10,7 +10,7 @@ namespace ML_Trackingstore.Configurations
         {
             builder.Property(x => x.Name).HasMaxLength(255);
             builder.HasIndex(x => x.Name).IsUnique();
-            builder.HasMany(x => x.Runs).WithOne(x => x.MLModel).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.Runs).WithOne(x => x.Experiment).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

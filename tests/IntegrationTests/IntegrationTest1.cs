@@ -11,8 +11,8 @@ namespace IntegrationTests;
 [TestClass]
 public class IntegrationTest1
 {
-    SqliteConnection _connection;
-    IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
+    readonly SqliteConnection _connection;
+    readonly IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
 
     public IntegrationTest1()
     {
