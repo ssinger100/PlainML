@@ -14,7 +14,7 @@ public class MLOpsTrackingStore
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<Experiment> CreateModel(string experimentname)
+    public async Task<Experiment> CreateExperiment(string experimentname)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
         var model = db.MLModels.Add(new Experiment()

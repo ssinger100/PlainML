@@ -33,21 +33,21 @@ public class IntegrationTest1
     }
 
     [TestMethod]
-    public async Task CreateModelTest()
+    public async Task CreateExperimentTest()
     {
-        string modelname = "TestModel";
+        string experimentName = "TestExperiment1";
 
         var store = new MLOpsTrackingStore(_dbContextFactory);
-        var result = await store.CreateModel(modelname);
+        var result = await store.CreateExperiment(experimentName);
 
-        Assert.AreEqual(modelname, result.Name);
+        Assert.AreEqual(experimentName, result.Name);
         Assert.AreEqual(0, result.Runs.Count);
     }
 
     [TestMethod]
     public async Task StartTrainingTest()
     {
-        string modelname = "TestModel";
+        string experimentName = "TestExperiment1";
 
         var parameters = new Parameter[]
         {
@@ -56,7 +56,7 @@ public class IntegrationTest1
         };
 
         var store = new MLOpsTrackingStore(_dbContextFactory);
-        store.StartRun(modelname);
+        store.StartRun(experimentName);
 
         await Task.Delay(10); // Heavy training
 
@@ -65,7 +65,7 @@ public class IntegrationTest1
             new(){ Name = "m1", Value = 0.45f }
         };
 
-        await store.EndRun(modelname, parameters, null, metrics);
+        await store.EndRun(experimentName, parameters, null, metrics);
     }
 
     public void Dispose() => _connection.Dispose();
