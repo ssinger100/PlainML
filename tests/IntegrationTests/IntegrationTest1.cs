@@ -60,7 +60,7 @@ public class IntegrationTest1
         };
 
         var store = new MLOpsTrackingStore(_dbContextFactory);
-        store.StartRun(experimentName);
+        await store.StartRun(experimentName);
 
         await Task.Delay(10); // Long running training process
 
@@ -69,7 +69,9 @@ public class IntegrationTest1
             new(){ Name = "m1", Value = 0.45f }
         };
 
-        await store.EndRun(experimentName, parameters, null, metrics);
+        int runId = await store.EndRun(experimentName, parameters, null, metrics);
+
+        Run run = await store.GetRun(runId);
     }
 
     public void Dispose() => _connection.Dispose();

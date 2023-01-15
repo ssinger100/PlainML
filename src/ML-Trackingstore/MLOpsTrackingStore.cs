@@ -14,54 +14,64 @@ public class MLOpsTrackingStore
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<Experiment> CreateExperiment(string experimentname)
+    public async Task<Experiment> CreateExperiment(string experimentName)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-        var model = db.MLModels.Add(new Experiment()
+        var experiment = db.MLModels.Add(new Experiment()
         {
-            Name = experimentname
+            Name = experimentName
         }).Entity;
         await db.SaveChangesAsync();
-        return model;
+        return experiment;
     }
 
-    public async Task DeleteModel(string experimentname)
+    public async Task DeleteExperiment(string experimentName)
     {
+        using var db = await _dbContextFactory.CreateDbContextAsync();
         throw new NotImplementedException();
     }
 
-    public async Task<Experiment[]> GetModels()
+    public async Task<Experiment[]> GetExperiments()
     {
+        using var db = await _dbContextFactory.CreateDbContextAsync();
+         
         throw new NotImplementedException();
     }
 
-    public async Task<Experiment> GetModel(string modelname)
+    public async Task<Experiment> GetExperiment(string experimentName)
     {
+        using var db = await _dbContextFactory.CreateDbContextAsync();
         throw new NotImplementedException();
     }
 
-
-
-    public void StartRun(string experimentname)
+    public async Task<int> StartRun(string experimentName, CancellationToken token = default)
     {
         if (_stopWatch.IsRunning)
-        {
+        {            
             throw new InvalidOperationException("StartTraining kann nicht 2x hintereinander aufgerufen werden. Bitte zunächst FinishedTraining ausführen.");
         }
         else
         {
+            var experiment = await GetExperiment(experimentName);
+
+            using var db = await _dbContextFactory.CreateDbContextAsync(token);
+
+
             _stopWatch.Reset();
             _stopWatch.Start();
         }
+
+        await Task.CompletedTask;
+        return -1;
     }
 
-    public async Task EndRun(string experimentname, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics)
+    public async Task<int> EndRun(string experimentName, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics)
     {
         if (_stopWatch.IsRunning)
         {
-            _stopWatch.Stop();
+            using var db = await _dbContextFactory.CreateDbContextAsync();
 
-            
+            _stopWatch.Stop();           
 
 
             _stopWatch.Reset();
@@ -70,11 +80,21 @@ public class MLOpsTrackingStore
         {
             throw new InvalidOperationException("StartTraining muss vor FinishedTraining aufgerufen werden.");
         }
+
+        await Task.CompletedTask;
+        return -1;
     }
 
-
-    public async Task DeployRun(string experimentname, Run run, string? deploymentTargetName)
+    public async Task<Run> GetRun(int runId, CancellationToken token = default)
     {
+        using var db = await _dbContextFactory.CreateDbContextAsync(token);
+        var run = await db.Set<Run>().FirstOrDefaultAsync(x => x.Id == runId, token);
+        return run ?? throw new KeyNotFoundException();
+    }
+
+    public async Task DeployRun(string experimentname, int runId, string? deploymentTargetName)
+    {
+        using var db = await _dbContextFactory.CreateDbContextAsync();
         throw new NotImplementedException();
     }
 }
