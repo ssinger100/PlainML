@@ -2,5 +2,6 @@ namespace ML_Trackingstore;
 
 public interface IArtifactStorage
 {
-    public int MyProperty { get; set; }   
+    Task Upload(int rundId, string localpath);
+    Task Download(int runId, string localpath);
 }

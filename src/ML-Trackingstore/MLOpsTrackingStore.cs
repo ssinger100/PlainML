@@ -7,11 +7,20 @@ namespace ML_Trackingstore;
 public class MLOpsTrackingStore
 {
     readonly IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
+    readonly IArtifactStorage _artifactStorage;
     readonly Stopwatch _stopWatch = new();
 
-    public MLOpsTrackingStore(IDbContextFactory<MLTrackingstoreContext> dbContextFactory)
+    public MLOpsTrackingStore(IDbContextFactory<MLTrackingstoreContext> dbContextFactory, IArtifactStorage artifactStorage)
     {
         _dbContextFactory = dbContextFactory;
+        _artifactStorage = artifactStorage;
+    }
+
+    public async Task Migrate()
+    {
+        using var context = await _dbContextFactory.CreateDbContextAsync();
+        context.Database.EnsureCreated();
+       // context.Database.Migrate();
     }
 
     public async Task<Experiment> GetOrCreateExperiment(string experimentName)
@@ -35,7 +44,7 @@ public class MLOpsTrackingStore
         if (experiment != null)
         {
             db.Set<Experiment>().Remove(experiment);
-            await db.SaveChangesAsync(token);        
+            await db.SaveChangesAsync(token);
         }
     }
 
@@ -48,7 +57,7 @@ public class MLOpsTrackingStore
     public async Task<int> StartRun(string experimentName, CancellationToken token = default)
     {
         if (_stopWatch.IsRunning)
-        {            
+        {
             throw new InvalidOperationException("StartTraining kann nicht 2x hintereinander aufgerufen werden. Bitte zunächst FinishedTraining ausführen.");
         }
         else
@@ -62,7 +71,7 @@ public class MLOpsTrackingStore
 
             _stopWatch.Reset();
             _stopWatch.Start();
-            
+
             run.Duration = _stopWatch.Elapsed;
             experiment.Runs.Add(run);
             await db.SaveChangesAsync(token);
@@ -74,7 +83,7 @@ public class MLOpsTrackingStore
     {
         if (_stopWatch.IsRunning)
         {
-            _stopWatch.Stop(); 
+            _stopWatch.Stop();
             TimeSpan duration = _stopWatch.Elapsed;
             _stopWatch.Reset();
 
@@ -119,17 +128,17 @@ public class MLOpsTrackingStore
         db.Attach(experiment);
 
         var run = await db.Set<Run>()
-            .OrderByDescending(x => x.DateTimeOffset)       
+            .OrderByDescending(x => x.DateTimeOffset)
             .FirstOrDefaultAsync(token);
         return run;
     }
 
     public async Task DeployRun(int runId, string deploymentTargetName = "production")
     {
-        using var db = await _dbContextFactory.CreateDbContextAsync();        
+        using var db = await _dbContextFactory.CreateDbContextAsync();
 
         var run = await db.Set<Run>().FirstOrDefaultAsync(x => x.Id == runId) ?? throw new NullReferenceException();
-        
+
         var target = await db.Set<Deploymenttarget>().FirstOrDefaultAsync(x => x.Name == deploymentTargetName);
         if (target == null)
         {
@@ -147,7 +156,7 @@ public class MLOpsTrackingStore
         {
             db.Set<Deployment>().Remove(olddeployment);
             await db.SaveChangesAsync();
-        }        
+        }
 
         db.Set<Deployment>().Add(new()
         {
@@ -166,8 +175,8 @@ public class MLOpsTrackingStore
             .FirstOrDefaultAsync();
     }
 
-    public async Task GetArtifacts(int runId)
+    public async Task GetArtifacts(int runId, string localpath)
     {
-
+        await _artifactStorage.Download(runId, localpath);
     }
 }

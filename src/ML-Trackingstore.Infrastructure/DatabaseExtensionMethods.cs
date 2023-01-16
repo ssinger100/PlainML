@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using ML_Trackingstore;
 
-namespace ML_Tackingstore.Infrastructure;
+namespace ML_Trackingstore.Infrastructure;
 
 public static class DatabaseExtensionMethods
 {
