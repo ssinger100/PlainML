@@ -14,34 +14,35 @@ public class MLOpsTrackingStore
         _dbContextFactory = dbContextFactory;
     }
 
-    public async Task<Experiment> CreateExperiment(string experimentName)
+    public async Task<Experiment> GetOrCreateExperiment(string experimentName)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-        var experiment = db.MLModels.Add(new Experiment()
+
+        var experiment = await db.Set<Experiment>().FirstOrDefaultAsync(x => x.Name == experimentName);
+        experiment ??= db.MLModels.Add(new Experiment()
         {
             Name = experimentName
         }).Entity;
+
         await db.SaveChangesAsync();
         return experiment;
     }
 
-    public async Task DeleteExperiment(string experimentName)
+    public async Task DeleteExperiment(string experimentName, CancellationToken token = default)
     {
-        using var db = await _dbContextFactory.CreateDbContextAsync();
-        throw new NotImplementedException();
+        using var db = await _dbContextFactory.CreateDbContextAsync(token);
+        var experiment = await db.Set<Experiment>().FirstOrDefaultAsync(x => x.Name == experimentName, token);
+        if (experiment != null)
+        {
+            db.Set<Experiment>().Remove(experiment);
+            await db.SaveChangesAsync(token);        
+        }
     }
 
     public async Task<Experiment[]> GetExperiments()
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-         
-        throw new NotImplementedException();
-    }
-
-    public async Task<Experiment> GetExperiment(string experimentName)
-    {
-        using var db = await _dbContextFactory.CreateDbContextAsync();
-        throw new NotImplementedException();
+        return await db.Set<Experiment>().ToArrayAsync();
     }
 
     public async Task<int> StartRun(string experimentName, CancellationToken token = default)
@@ -52,47 +53,78 @@ public class MLOpsTrackingStore
         }
         else
         {
-            var experiment = await GetExperiment(experimentName);
+            var experiment = await GetOrCreateExperiment(experimentName);
 
             using var db = await _dbContextFactory.CreateDbContextAsync(token);
+            db.Attach(experiment);
 
+            Run run = new();
 
             _stopWatch.Reset();
             _stopWatch.Start();
+            
+            run.Duration = _stopWatch.Elapsed;
+            experiment.Runs.Add(run);
+            await db.SaveChangesAsync(token);
+            return run.Id;
         }
-
-        await Task.CompletedTask;
-        return -1;
     }
 
-    public async Task<int> EndRun(string experimentName, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics)
+    public async Task EndRun(int runId, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics)
     {
         if (_stopWatch.IsRunning)
         {
-            using var db = await _dbContextFactory.CreateDbContextAsync();
-
-            _stopWatch.Stop();           
-
-
+            _stopWatch.Stop(); 
+            TimeSpan duration = _stopWatch.Elapsed;
             _stopWatch.Reset();
+
+            using var db = await _dbContextFactory.CreateDbContextAsync();
+            Run? run = await db.Set<Run>().FirstOrDefaultAsync(x => x.Id == runId);
+
+            if (run == null)
+            {
+                throw new KeyNotFoundException(nameof(runId));
+            }
+
+            run.Duration = duration;
+
+            if(parameters != null) { run.Parameters.AddRange(parameters); }
+            if(parameters_StringType != null) { run.Parameter_StringType.AddRange(parameters_StringType); }
+            if(metrics != null) { run.Metrics.AddRange(metrics); }
+
+            await db.SaveChangesAsync();
         }
         else
         {
             throw new InvalidOperationException("StartTraining muss vor FinishedTraining aufgerufen werden.");
         }
-
-        await Task.CompletedTask;
-        return -1;
     }
 
     public async Task<Run> GetRun(int runId, CancellationToken token = default)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync(token);
-        var run = await db.Set<Run>().FirstOrDefaultAsync(x => x.Id == runId, token);
+        var run = await db.Set<Run>()
+            .Include(x => x.Parameters)
+            .Include(x => x.Parameter_StringType)
+            .Include(x => x.Metrics)
+            .FirstOrDefaultAsync(x => x.Id == runId, token);
         return run ?? throw new KeyNotFoundException();
     }
 
-    public async Task DeployRun(string experimentname, int runId, string? deploymentTargetName)
+    public async Task<Run?> GetLastRun(string experimentName, CancellationToken token = default)
+    {
+        var experiment = await GetOrCreateExperiment(experimentName);
+
+        using var db = await _dbContextFactory.CreateDbContextAsync(token);
+        db.Attach(experiment);
+
+        var run = await db.Set<Run>()
+            .OrderByDescending(x => x.DateTimeOffset)       
+            .FirstOrDefaultAsync(token);
+        return run;
+    }
+
+    public async Task DeployRun(int runId, string? deploymentTargetName)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
         throw new NotImplementedException();

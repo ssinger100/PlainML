@@ -42,7 +42,7 @@ public class IntegrationTest1
         string experimentName = "TestExperiment1";
 
         var store = new MLOpsTrackingStore(_dbContextFactory);
-        var result = await store.CreateExperiment(experimentName);
+        var result = await store.GetOrCreateExperiment(experimentName);
 
         Assert.AreEqual(experimentName, result.Name);
         Assert.AreEqual(0, result.Runs.Count);
@@ -51,7 +51,12 @@ public class IntegrationTest1
     [TestMethod]
     public async Task StartTrainingTest()
     {
-        string experimentName = "TestExperiment1";
+        string experimentName = "TestExperiment1";        
+
+        var store = new MLOpsTrackingStore(_dbContextFactory);
+        int runId = await store.StartRun(experimentName);
+
+        await Task.Delay(10); // Long running training process
 
         var parameters = new Parameter[]
         {
@@ -59,19 +64,16 @@ public class IntegrationTest1
             new(){ Name = "p2", Value = 2 }
         };
 
-        var store = new MLOpsTrackingStore(_dbContextFactory);
-        await store.StartRun(experimentName);
-
-        await Task.Delay(10); // Long running training process
-
         var metrics = new Metric[]
         {
             new(){ Name = "m1", Value = 0.45f }
         };
 
-        int runId = await store.EndRun(experimentName, parameters, null, metrics);
+        await store.EndRun(runId, parameters, null, metrics);
 
         Run run = await store.GetRun(runId);
+        Assert.AreEqual("p1", run.Parameters[0].Name);
+        //TODO: Asserts
     }
 
     public void Dispose() => _connection.Dispose();
