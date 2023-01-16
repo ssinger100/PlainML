@@ -4,10 +4,12 @@ public class Run
 {
     public int Id { get; set; }
     public DateTimeOffset DateTimeOffset { get; set; } = DateTimeOffset.UtcNow;
-    public TimeSpan Duration { get; set; }
+    public TimeSpan? Duration { get; set; }
 
+    public int ExperimentId { get; set; }
     public Experiment? Experiment { get; set; }
-    public ICollection<Parameter> Parameters { get; set; } = new List<Parameter>();
-    public ICollection<Parameter_StringType> Parameter_StringType { get; set; } = new List<Parameter_StringType>();
-    public ICollection<Metric> Metrics { get; set; } = new List<Metric>();
+
+    public List<Parameter> Parameters { get; set; } = new();
+    public List<Parameter_StringType> Parameter_StringType { get; set; } = new();
+    public List<Metric> Metrics { get; set; } = new();
 }

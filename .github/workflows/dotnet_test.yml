@@ -13,7 +13,7 @@ env:
 
 jobs:
   build:
-    name: ${{matrix.version}}-job
+    name: ${{matrix.os}}-job
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
