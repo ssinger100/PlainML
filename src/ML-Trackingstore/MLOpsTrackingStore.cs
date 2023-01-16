@@ -124,9 +124,50 @@ public class MLOpsTrackingStore
         return run;
     }
 
-    public async Task DeployRun(int runId, string? deploymentTargetName)
+    public async Task DeployRun(int runId, string deploymentTargetName = "production")
+    {
+        using var db = await _dbContextFactory.CreateDbContextAsync();        
+
+        var run = await db.Set<Run>().FirstOrDefaultAsync(x => x.Id == runId) ?? throw new NullReferenceException();
+        
+        var target = await db.Set<Deploymenttarget>().FirstOrDefaultAsync(x => x.Name == deploymentTargetName);
+        if (target == null)
+        {
+            target = db.Set<Deploymenttarget>().Add(new()
+            {
+                Name = deploymentTargetName
+            }).Entity;
+            await db.SaveChangesAsync();
+        }
+
+        //Delete old deployment
+        var olddeployment = await db.Set<Deployment>()
+            .FirstOrDefaultAsync(x => x.ExperimentId == run.ExperimentId && x.DeploymenttargetId == target.Id);
+        if (olddeployment != null)
+        {
+            db.Set<Deployment>().Remove(olddeployment);
+            await db.SaveChangesAsync();
+        }        
+
+        db.Set<Deployment>().Add(new()
+        {
+            DeploymenttargetId = target.Id,
+            ExperimentId = run.ExperimentId
+        });
+
+        await db.SaveChangesAsync();
+    }
+
+    public async Task<Run?> GetDeployedRun(string experimentName, string deploymentTargetName)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-        throw new NotImplementedException();
+        return await db.Set<Deployment>().Where(x => x.Experiment!.Name == experimentName && x.Deploymenttarget!.Name == deploymentTargetName)
+            .Select(x => x.Run)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task GetArtifacts(int runId)
+    {
+
     }
 }

@@ -69,4 +69,19 @@ public class IntegrationTest1
         Assert.AreEqual("p1", run.Parameters[0].Name);
         //TODO: Asserts
     }
+
+    [TestMethod]
+    public async Task GetDeployedRunTest()
+    {
+        var store = new MLOpsTrackingStore(_dbContextFactory);
+       // store.GetDeployedRun();
+    }
+
+    [TestMethod]
+    public async Task GetArtifactsTest()
+    {
+        var store = new MLOpsTrackingStore(_dbContextFactory);
+       // store.GetDeployedRun();
+       // store.GetArtifacts();
+    }
 }
