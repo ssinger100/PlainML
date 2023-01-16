@@ -1,28 +1,22 @@
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ML_Trackingstore;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using ML_Trackingstore.Entities;
+using ML_Tackingstore.Infrastructure;
 
 namespace IntegrationTests;
 
 [TestClass]
 public class IntegrationTest1
 {
-    readonly SqliteConnection _connection;
     readonly IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
 
     public IntegrationTest1()
     {
-        // Create and open a connection. This creates the SQLite in-memory database, which will persist until the connection is closed
-        // at the end of the test (see Dispose below).
-        _connection = new SqliteConnection("Filename=:memory:");
-        _connection.Open();
-
         var provider = new ServiceCollection()
-            .AddDbContextFactory<MLTrackingstoreContext>(options => options.UseSqlite(_connection))
+            .UseSQLLite()
             .BuildServiceProvider();
 
         _dbContextFactory = provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();        
@@ -75,6 +69,4 @@ public class IntegrationTest1
         Assert.AreEqual("p1", run.Parameters[0].Name);
         //TODO: Asserts
     }
-
-    public void Dispose() => _connection.Dispose();
 }
