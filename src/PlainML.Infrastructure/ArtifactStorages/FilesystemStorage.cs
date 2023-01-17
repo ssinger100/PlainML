@@ -1,4 +1,4 @@
-namespace ML_Trackingstore.Infrastructure.ArtifactStorages;
+namespace PlainML.Infrastructure.ArtifactStorages;
 
 public class FilesystemStorage : IArtifactStorage
 {
