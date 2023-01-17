@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ML_Trackingstore.Entities;
+using PlainML.Entities;
 
-namespace ML_Trackingstore;
+namespace PlainML;
 
 public class MLTrackingstoreContext : DbContext
 {

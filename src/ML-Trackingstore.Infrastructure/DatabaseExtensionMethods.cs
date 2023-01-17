@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using ML_Trackingstore;
+using PlainML;
 
-namespace ML_Trackingstore.Infrastructure;
+namespace PlainML.Infrastructure;
 
 public static class DatabaseExtensionMethods
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ML_Trackingstore.Infrastructure.ArtifactStorages;
+using PlainML.Infrastructure.ArtifactStorages;
 
-namespace ML_Trackingstore.Infrastructure;
+namespace PlainML.Infrastructure;
 
 public static class ArtifactStorageExtensionMethods
 {

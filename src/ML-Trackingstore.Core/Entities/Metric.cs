@@ -1,4 +1,4 @@
-﻿namespace ML_Trackingstore.Entities;
+﻿namespace PlainML.Entities;
 
 public class Metric
 {

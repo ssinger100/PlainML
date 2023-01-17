@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ML_Trackingstore.Entities;
+using PlainML.Entities;
 
-namespace ML_Trackingstore.Configurations;
+namespace PlainML.Configurations;
 
 internal class DeploymenttargetConfiguration : IEntityTypeConfiguration<Deploymenttarget>
 {

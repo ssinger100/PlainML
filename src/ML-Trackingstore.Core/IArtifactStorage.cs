@@ -1,4 +1,4 @@
-namespace ML_Trackingstore;
+namespace PlainML;
 
 public interface IArtifactStorage
 {

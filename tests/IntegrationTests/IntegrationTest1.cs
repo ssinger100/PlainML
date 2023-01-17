@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ML_Trackingstore;
+using PlainML;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using ML_Trackingstore.Entities;
-using ML_Trackingstore.Infrastructure;
+using PlainML.Entities;
+using PlainML.Infrastructure;
 
 namespace IntegrationTests;
 

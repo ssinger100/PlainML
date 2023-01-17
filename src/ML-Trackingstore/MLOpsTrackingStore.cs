@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ML_Trackingstore.Entities;
+using PlainML.Entities;
 using System.Diagnostics;
 
-namespace ML_Trackingstore;
+namespace PlainML;
 
 public class MLOpsTrackingStore
 {
