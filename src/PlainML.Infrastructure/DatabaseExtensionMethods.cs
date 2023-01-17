@@ -12,7 +12,7 @@ public static class DatabaseExtensionMethods
     public static IServiceCollection UseSQLLite(this IServiceCollection services)
     {
         _connection.Open();
-        return services.AddDbContextFactory<MLTrackingstoreContext>(options => options.UseSqlite(_connection));
+        return services.AddDbContextFactory<PlainMLContext>(options => options.UseSqlite(_connection));
     }
 
     public static IServiceCollection UseSQLServer()

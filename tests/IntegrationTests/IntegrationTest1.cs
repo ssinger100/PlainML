@@ -18,14 +18,14 @@ public class IntegrationTest1
         _provider = new ServiceCollection()
             .UseSQLLite()
             .UseFilesystem()
-            .AddTransient<MLOpsTrackingStore>()
+            .AddTransient<PlainMLService>()
             .BuildServiceProvider();
     }
 
     [TestInitialize]
     public async Task InitSQLLite()
     {
-        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();
+        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         using var context = await dbContextFactory.CreateDbContextAsync();
         context.Database.EnsureCreated();
         context.Database.Migrate();
@@ -36,9 +36,9 @@ public class IntegrationTest1
     {
         string experimentName = "TestExperiment1";
 
-        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();
+        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
-        var store = new MLOpsTrackingStore(dbContextFactory, artifactStorage);
+        var store = new PlainMLService(dbContextFactory, artifactStorage);
         var result = await store.GetOrCreateExperiment(experimentName);
 
         Assert.AreEqual(experimentName, result.Name);
@@ -50,9 +50,9 @@ public class IntegrationTest1
     {
         string experimentName = "TestExperiment1";
 
-        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();
+        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
-        var store = new MLOpsTrackingStore(dbContextFactory, artifactStorage);
+        var store = new PlainMLService(dbContextFactory, artifactStorage);
 
         int runId = await store.StartRun(experimentName);
 
@@ -79,18 +79,18 @@ public class IntegrationTest1
     [TestMethod]
     public async Task GetDeployedRunTest()
     {
-        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();
+        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
-        var store = new MLOpsTrackingStore(dbContextFactory, artifactStorage);
+        var store = new PlainMLService(dbContextFactory, artifactStorage);
        // store.GetDeployedRun();
     }
 
     [TestMethod]
     public async Task GetArtifactsTest()
     {
-        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<MLTrackingstoreContext>>();
+        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
-        var store = new MLOpsTrackingStore(dbContextFactory, artifactStorage);
+        var store = new PlainMLService(dbContextFactory, artifactStorage);
        // store.GetDeployedRun();
        // store.GetArtifacts();
     }

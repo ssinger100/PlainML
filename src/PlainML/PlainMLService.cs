@@ -4,13 +4,13 @@ using System.Diagnostics;
 
 namespace PlainML;
 
-public class MLOpsTrackingStore
+public class PlainMLService
 {
-    readonly IDbContextFactory<MLTrackingstoreContext> _dbContextFactory;
+    readonly IDbContextFactory<PlainMLContext> _dbContextFactory;
     readonly IArtifactStorage _artifactStorage;
     readonly Stopwatch _stopWatch = new();
 
-    public MLOpsTrackingStore(IDbContextFactory<MLTrackingstoreContext> dbContextFactory, IArtifactStorage artifactStorage)
+    public PlainMLService(IDbContextFactory<PlainMLContext> dbContextFactory, IArtifactStorage artifactStorage)
     {
         _dbContextFactory = dbContextFactory;
         _artifactStorage = artifactStorage;

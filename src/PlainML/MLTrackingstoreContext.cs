@@ -3,16 +3,16 @@ using PlainML.Entities;
 
 namespace PlainML;
 
-public class MLTrackingstoreContext : DbContext
+public class PlainMLContext : DbContext
 {
     public DbSet<Experiment> MLModels { get; set; } = null!;
 
-    public MLTrackingstoreContext()
+    public PlainMLContext()
     {
 
     }
 
-    public MLTrackingstoreContext(DbContextOptions<MLTrackingstoreContext> options)
+    public PlainMLContext(DbContextOptions<PlainMLContext> options)
         : base(options)
     {
 
@@ -20,6 +20,6 @@ public class MLTrackingstoreContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(MLTrackingstoreContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(PlainMLContext).Assembly);
     }
 }
