@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ML-Trackingstore.Core\ML-Trackingstore.Core.csproj" />
-    <ProjectReference Include="..\ML-Trackingstore\ML-Trackingstore.csproj" />
+    <ProjectReference Include="..\..\src\PlainML.Core\PlainML.Core.csproj" />
+    <ProjectReference Include="..\PlainML\PlainML.csproj" />
   </ItemGroup>
 
 </Project>

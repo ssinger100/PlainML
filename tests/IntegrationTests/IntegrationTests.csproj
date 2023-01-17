@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ML-Trackingstore.Core\ML-Trackingstore.Core.csproj" />
-    <ProjectReference Include="..\..\src\ML-Trackingstore\ML-Trackingstore.csproj" />
-    <ProjectReference Include="..\..\src\ML-Trackingstore.Infrastructure\ML-Trackingstore.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\PlainML.Core\PlainML.Core.csproj" />
+    <ProjectReference Include="..\..\src\PlainML\PlainML.csproj" />
+    <ProjectReference Include="..\..\src\PlainML.Infrastructure\PlainML.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

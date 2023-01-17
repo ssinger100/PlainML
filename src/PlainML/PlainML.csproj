@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ML-Trackingstore.Core\ML-Trackingstore.Core.csproj" />
+    <ProjectReference Include="..\PlainML.Core\PlainML.Core.csproj" />
   </ItemGroup>
 
 </Project>

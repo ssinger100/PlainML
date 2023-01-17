@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EB901440-227F-4682-A4F6-254056F7D868}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML-Trackingstore.Core", "src\ML-Trackingstore.Core\ML-Trackingstore.Core.csproj", "{195788B6-C553-463D-A1D1-A7F29AE034BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlainML.Core", "src\PlainML.Core\PlainML.Core.csproj", "{195788B6-C553-463D-A1D1-A7F29AE034BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{488E1A9E-2611-4DE0-B900-EA4986F5BD4B}"
 EndProject
@@ -13,11 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "tests\IntegrationTests\IntegrationTests.csproj", "{DEAA9385-BF23-4527-9AE2-C7D3B446C3A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML-Trackingstore", "src\ML-Trackingstore\ML-Trackingstore.csproj", "{3F81F802-EA9E-4DDE-A452-7FC9BDCC8556}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlainML", "src\PlainML\PlainML.csproj", "{3F81F802-EA9E-4DDE-A452-7FC9BDCC8556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML-Trackingstore.Samples", "src\ML-Trackingstore.Samples\ML-Trackingstore.Samples.csproj", "{CE2E3D47-CFB7-43D5-BD00-98AD17695E9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlainML.Samples", "src\PlainML.Samples\PlainML.Samples.csproj", "{CE2E3D47-CFB7-43D5-BD00-98AD17695E9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML-Tackingstore.Infrastructure", "src\ML-Trackingstore.Infrastructure\ML-Trackingstore.Infrastructure.csproj", "{5B370B98-768E-44B1-ACC7-F7AA43F157CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML-Tackingstore.Infrastructure", "src\PlainML.Infrastructure\PlainML.Infrastructure.csproj", "{5B370B98-768E-44B1-ACC7-F7AA43F157CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
