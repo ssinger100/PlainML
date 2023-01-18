@@ -26,14 +26,8 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Install dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-
     - name: Test
-      run: dotnet test --configuration Release --no-build
+      run: dotnet test --configuration Release
 
   deploy:
     name: ${{matrix.os}}-deploy
@@ -43,6 +37,9 @@ jobs:
       matrix:
         os: [ubuntu-latest] #, windows-latest, macOS-latest]
     steps:
+    - name: Build
+      run: dotnet build --configuration Release
+
     - name: Create nuget packages
       run: |
         dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
