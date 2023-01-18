@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using PlainML.Entities;
 using PlainML.Infrastructure;
+using System.IO;
+using System.Linq;
 
 namespace IntegrationTests;
 
@@ -91,7 +93,14 @@ public class IntegrationTest1
         var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
         var store = new PlainMLService(dbContextFactory, artifactStorage);
-       // store.GetDeployedRun();
-       // store.GetArtifacts();
+
+        // Create run
+        int runId = await store.StartRun("Test");
+        await store.EndRun(runId, null, null, null);
+        string path = "./Artifacts";
+        await store.GetArtifacts(runId, path);
+        int filesCount = Directory.EnumerateFiles(path).Count();
+        Assert.Inconclusive();
+       // Assert.AreEqual(1, filesCount);
     }
 }
