@@ -41,6 +41,6 @@ jobs:
     - name: Create nuget packages
       run: dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
       #/home/runner/work/PlainML/PlainML/nupkgs/PlainML
-
+      #/home/runner/work/PlainML/PlainML/nupkgs/PlainML.0.0.77.nupkg
     - name: Push nuget packages
-      run: dotnet push "./**/*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
+      run: dotnet push "nupkgs/*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
