@@ -38,8 +38,8 @@ jobs:
     - name: Create nuget packages
       run: |
         dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML/PlainML.Core.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML/PlainML.Infrastructure.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
+        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
 
     - name: Push nuget packages
       run: dotnet nuget push "nupkgs/*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
