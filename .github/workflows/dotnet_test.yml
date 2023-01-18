@@ -43,4 +43,4 @@ jobs:
       #/home/runner/work/PlainML/PlainML/nupkgs/PlainML
 
     - name: Push nuget packages
-      run: dotnet push "*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
+      run: dotnet push "./**/*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
