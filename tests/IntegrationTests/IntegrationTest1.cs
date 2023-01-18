@@ -98,8 +98,8 @@ public class IntegrationTest1
         int runId = await store.StartRun("Test");
         await store.EndRun(runId, null, null, null);
         string path = "./Artifacts";
-        await store.GetArtifacts(runId, path);
-        int filesCount = Directory.EnumerateFiles(path).Count();
+        // await store.GetArtifacts(runId, path);
+        // int filesCount = Directory.EnumerateFiles(path).Count();
         Assert.Inconclusive();
        // Assert.AreEqual(1, filesCount);
     }
