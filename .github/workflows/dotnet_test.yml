@@ -39,5 +39,5 @@ jobs:
       run: ls
 
     - name: Create nuget packages
-      run: dotnet pack ./PlainML/PlainML.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
+      run: dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
       #/home/runner/work/PlainML/PlainML/nupkgs/PlainML
