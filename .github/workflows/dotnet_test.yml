@@ -30,10 +30,7 @@ jobs:
       run: dotnet test --configuration Release
 
   deploy:
-    on:
-      push:
-        branches:
-          - master
+    if: github.ref == 'refs/heads/master'
     name: ${{matrix.os}}-deploy
     needs: build
     runs-on: ${{ matrix.os }}
