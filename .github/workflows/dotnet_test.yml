@@ -28,9 +28,12 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
-      
+
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
       run: dotnet test --configuration Release --no-build
+
+    - name: Create nuget packages
+      run: dotnet pack --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_id }}
