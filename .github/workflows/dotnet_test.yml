@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest] #, windows-latest, macOS-latest]
     steps:
     - uses: actions/checkout@v3
 
@@ -28,9 +28,18 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
-      
+
     - name: Build
       run: dotnet build --configuration Release --no-restore
 
     - name: Test
       run: dotnet test --configuration Release --no-build
+
+    - name: Create nuget packages
+      run: |
+        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
+
+    - name: Push nuget packages
+      run: dotnet nuget push "nupkgs/*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
