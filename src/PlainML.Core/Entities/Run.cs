@@ -3,7 +3,7 @@
 public class Run
 {
     public int Id { get; set; }
-    public DateTimeOffset DateTimeOffset { get; set; } = DateTimeOffset.UtcNow;
+    public DateTime DateTime { get; set; } = DateTime.UtcNow;
     public TimeSpan? Duration { get; set; }
 
     public int ExperimentId { get; set; }

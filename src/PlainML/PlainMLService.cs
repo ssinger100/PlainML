@@ -140,7 +140,8 @@ public class PlainMLService
         db.Attach(experiment);
 
         var run = await db.Set<Run>()
-            .OrderByDescending(x => x.DateTimeOffset)
+            .Include(x => x.Experiment)
+            .OrderByDescending(x => x.DateTime)
             .AsNoTracking()
             .FirstOrDefaultAsync(token);
         return run;
