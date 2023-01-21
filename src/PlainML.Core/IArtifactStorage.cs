@@ -1,7 +1,9 @@
+using PlainML.Entities;
+
 namespace PlainML;
 
 public interface IArtifactStorage
 {
-    Task Upload(int rundId, string localpath);
-    Task Download(int runId, string localpath);
+    Task Upload(Run run, string localpath);
+    Task Download(Run run, string localpath);
 }
