@@ -14,8 +14,8 @@ var _provider = new ServiceCollection()
 string experimentName = "TestExperiment";
 
 PlainMLService s = _provider.GetRequiredService<PlainMLService>();
-//await s.EnsureCreated(); //TODO: Uncomment
-await s.Migrate();
+await s.EnsureCreated(); //TODO: Uncomment
+//await s.Migrate();
 int rundId = await s.StartRun(experimentName);
 await Task.Delay(100);
 await s.EndRun(rundId, null, null, null);
