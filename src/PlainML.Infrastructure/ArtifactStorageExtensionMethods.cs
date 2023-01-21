@@ -15,4 +15,9 @@ public static class ArtifactStorageExtensionMethods
     {
         throw new NotImplementedException(nameof(UseDatabase));
     }
+
+    public static IServiceCollection UseMicrosoftAzure()
+    {
+        throw new NotImplementedException(nameof(UseMicrosoftAzure));
+    }
 }

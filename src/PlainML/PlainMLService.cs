@@ -16,7 +16,7 @@ public class PlainMLService
         _artifactStorage = artifactStorage;
     }
 
-    public async Task Migrate(CancellationToken token = default)
+    public async Task EnsureCreated(CancellationToken token = default)
     {
         using var context = await _dbContextFactory.CreateDbContextAsync(token);
         await context.Database.EnsureCreatedAsync(token);
@@ -24,12 +24,22 @@ public class PlainMLService
      //   context.Database.Migrate();
     }
 
+    public Task Migrate(CancellationToken token = default)
+    {
+        // using var context = await _dbContextFactory.CreateDbContextAsync(token);
+        // await context.Database.EnsureCreatedAsync(token);
+        // Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate();
+        // context.Database.Migrate();
+
+        throw new NotImplementedException(nameof(Migrate));
+    }
+
     public async Task<Experiment> GetOrCreateExperiment(string experimentName)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
 
-        var experiment = await db.Set<Experiment>().FirstOrDefaultAsync(x => x.Name == experimentName);
-        experiment ??= db.MLModels.Add(new Experiment()
+        var experiment = await db.Set<Experiment>().AsNoTracking().FirstOrDefaultAsync(x => x.Name == experimentName);
+        experiment ??= db.Set<Experiment>().Add(new Experiment()
         {
             Name = experimentName
         }).Entity;
@@ -52,7 +62,7 @@ public class PlainMLService
     public async Task<Experiment[]> GetExperiments()
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-        return await db.Set<Experiment>().ToArrayAsync();
+        return await db.Set<Experiment>().AsNoTracking().ToArrayAsync();
     }
 
     public async Task<int> StartRun(string experimentName, CancellationToken token = default)
@@ -117,6 +127,7 @@ public class PlainMLService
             .Include(x => x.Parameters)
             .Include(x => x.Parameter_StringType)
             .Include(x => x.Metrics)
+            .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == runId, token);
         return run ?? throw new KeyNotFoundException();
     }
@@ -129,7 +140,9 @@ public class PlainMLService
         db.Attach(experiment);
 
         var run = await db.Set<Run>()
-            .OrderByDescending(x => x.DateTimeOffset)
+            .Include(x => x.Experiment)
+            .OrderByDescending(x => x.DateTime)
+            .AsNoTracking()
             .FirstOrDefaultAsync(token);
         return run;
     }
@@ -140,7 +153,7 @@ public class PlainMLService
 
         var run = await db.Set<Run>().FirstOrDefaultAsync(x => x.Id == runId) ?? throw new NullReferenceException();
 
-        var target = await db.Set<Deploymenttarget>().FirstOrDefaultAsync(x => x.Name == deploymentTargetName);
+        var target = await db.Set<Deploymenttarget>().AsNoTracking().FirstOrDefaultAsync(x => x.Name == deploymentTargetName);
         if (target == null)
         {
             target = db.Set<Deploymenttarget>().Add(new()
@@ -171,13 +184,17 @@ public class PlainMLService
     public async Task<Run?> GetDeployedRun(string experimentName, string deploymentTargetName)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
-        return await db.Set<Deployment>().Where(x => x.Experiment!.Name == experimentName && x.Deploymenttarget!.Name == deploymentTargetName)
+        return await db.Set<Deployment>()
+            .AsNoTracking()
+            .Where(x => x.Experiment!.Name == experimentName && x.Deploymenttarget!.Name == deploymentTargetName)
             .Select(x => x.Run)
             .FirstOrDefaultAsync();
     }
 
     public async Task GetArtifacts(int runId, string localpath)
     {
-        await _artifactStorage.Download(runId, localpath);
+        using var db = await _dbContextFactory.CreateDbContextAsync();
+        Run run = await db.Set<Run>().FirstAsync(x => x.Id == runId);
+        await _artifactStorage.Download(run, localpath);
     }
 }

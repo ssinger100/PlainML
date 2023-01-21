@@ -1,3 +1,5 @@
+using PlainML.Entities;
+
 namespace PlainML.Infrastructure.ArtifactStorages;
 
 public class FilesystemStorage : IArtifactStorage
@@ -8,12 +10,12 @@ public class FilesystemStorage : IArtifactStorage
         _basepath = basepath;
     }
 
-    public Task Download(int runId, string localpath)
+    public Task Download(Run run, string localpath)
     {
         throw new NotImplementedException();
     }
 
-    public Task Upload(int rundId, string localpath)
+    public Task Upload(Run run, string localpath)
     {
         throw new NotImplementedException();
     }

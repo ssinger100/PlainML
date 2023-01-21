@@ -7,9 +7,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <ItemGroup>
+
+  <!-- <ItemGroup>
     <PackageReference Include="PlainML" Version="0.0.84" />
     <PackageReference Include="PlainML.Infrastructure" Version="0.0.84" />
     <PackageReference Include="PlainML.Core" Version="0.0.84" />
+  </ItemGroup> -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlainML\PlainML.csproj" />
+    <ProjectReference Include="..\..\src\PlainML.Core\PlainML.Core.csproj" />
+    <ProjectReference Include="..\..\src\PlainML.Infrastructure\PlainML.Infrastructure.csproj" />
   </ItemGroup>
+
 </Project>
