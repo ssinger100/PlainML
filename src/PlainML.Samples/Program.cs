@@ -6,7 +6,7 @@ using PlainML.Infrastructure;
 Console.WriteLine("Hello, World!");
 
 var _provider = new ServiceCollection()
-            .UseSQLLite()
+            .UseSqLite()
             .UseFilesystem()
             .AddTransient<PlainMLService>()
             .BuildServiceProvider();

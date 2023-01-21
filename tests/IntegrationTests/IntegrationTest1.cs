@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using PlainML.Entities;
 using PlainML.Infrastructure;
-using System.IO;
-using System.Linq;
 
 namespace IntegrationTests;
 
@@ -18,7 +16,7 @@ public class IntegrationTest1
     public IntegrationTest1()
     {
         _provider = new ServiceCollection()
-            .UseSQLLite()
+            .UseSqLite()
             .UseFilesystem()
             .AddTransient<PlainMLService>()
             .BuildServiceProvider();
