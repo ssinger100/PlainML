@@ -21,4 +21,4 @@ await Task.Delay(100);
 await s.EndRun(rundId, null, null, null);
 
 Run? lastRun = await s.GetLastRun(experimentName);
-System.Console.WriteLine(lastRun?.Experiment?.Name);
+Console.WriteLine(lastRun?.Experiment?.Name);
