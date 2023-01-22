@@ -5,6 +5,10 @@
     <RootNamespace>PlainML.Infrastructure</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <Authors>Stefan Singer</Authors>
+    <Company>None</Company>
+    <Product>PlainML.Infrastructure</Product>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.2" />

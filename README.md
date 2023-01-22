@@ -21,10 +21,17 @@ Kurze Beschreibung (TODO)
 1. Install C# extensions for VSCode
 1. Create project
 1. Install nuget package to project:
-```
-dotnet add package PlainML
-```
+    ```
+    dotnet add package PlainML
+    ```
+1. Database and artifactstorage configuration with dependency injection:
+    ```
+    dotnet add package PlainML.Infrastructure
+    ```
 1. Use code
+    ```
+    TODO: example code
+    ```
 1. Use UI
 
 
