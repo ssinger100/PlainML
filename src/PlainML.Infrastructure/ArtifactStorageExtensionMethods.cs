@@ -5,19 +5,19 @@ namespace PlainML.Infrastructure;
 
 public static class ArtifactStorageExtensionMethods
 {
-    public static IServiceCollection UseFilesystem(this IServiceCollection services, string? directory = null)
+    public static IServiceCollection UseArtifactStorageFilesystem(this IServiceCollection services, string? directory = null)
     {
         directory ??= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ML-Tackingstore", "Storage");
         return services.AddTransient<IArtifactStorage>(x => new FilesystemStorage(directory));
     }
 
-    public static IServiceCollection UseDatabase()
+    public static IServiceCollection UseArtifactStorageSQLServer()
     {
-        throw new NotImplementedException(nameof(UseDatabase));
+        throw new NotImplementedException(nameof(UseArtifactStorageSQLServer));
     }
 
-    public static IServiceCollection UseMicrosoftAzure()
+    public static IServiceCollection UseArtifactStorageMicrosoftAzure()
     {
-        throw new NotImplementedException(nameof(UseMicrosoftAzure));
+        throw new NotImplementedException(nameof(UseArtifactStorageMicrosoftAzure));
     }
 }

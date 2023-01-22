@@ -7,7 +7,7 @@ Console.WriteLine("Hello, World!");
 
 var _provider = new ServiceCollection()
             .UsePlainMLSqLite()
-            .UseFilesystem()
+            .UseArtifactStorageFilesystem()
             .AddTransient<PlainMLService>()
             .BuildServiceProvider();
 
