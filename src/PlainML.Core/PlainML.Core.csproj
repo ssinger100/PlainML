@@ -5,6 +5,10 @@
     <RootNamespace>PlainML</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <Authors>Stefan Singer</Authors>
+    <Company>None</Company>
+    <Product>PlainML.Core</Product>
   </PropertyGroup>
 
 </Project>

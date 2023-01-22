@@ -6,6 +6,10 @@
     <RootNamespace>PlainML.Samples</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <Authors>Stefan Singer</Authors>
+    <Company>None</Company>
+    <Product>PlainML.Samples</Product>
   </PropertyGroup>
 
   <!-- <ItemGroup>
