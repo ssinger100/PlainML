@@ -16,7 +16,7 @@ public class IntegrationTest1
     public IntegrationTest1()
     {
         _provider = new ServiceCollection()
-            .UseSqLite()
+            .UsePlainMLSqLite()
             .UseFilesystem()
             .AddTransient<PlainMLService>()
             .BuildServiceProvider();
