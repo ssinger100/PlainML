@@ -17,7 +17,7 @@ public static class DatabaseExtensionMethods
 
     public static IServiceCollection UsePlainMLInMemoryDatabase(this IServiceCollection services, string databaseName, Action<InMemoryDbContextOptionsBuilder>? inMemoryOptionsAction = null)
     {
-        return services.AddDbContextFactory<PlainMLContext>(options => options.UseInMemoryDatabase(databaseName));
+        return services.AddDbContextFactory<PlainMLContext>(options => options.UseInMemoryDatabase(databaseName, inMemoryOptionsAction));
     }
 
     public static IServiceCollection UsePlainMLSQLServer(this IServiceCollection services, string connectionString)
