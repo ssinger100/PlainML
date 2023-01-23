@@ -7,10 +7,9 @@ namespace PlainML.Infrastructure;
 
 public static class DatabaseExtensionMethods
 {
-    readonly static SqliteConnection _connection = new ("Filename=:memory:");
-
     public static IServiceCollection UsePlainMLSqLite(this IServiceCollection services)
     {
+        SqliteConnection _connection = new ("Filename=:memory:");
         _connection.Open();
         return services.AddDbContextFactory<PlainMLContext>(options => options.UseSqlite(_connection));
     }
