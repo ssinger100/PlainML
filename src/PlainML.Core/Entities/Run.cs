@@ -13,6 +13,5 @@ public class Run
     public List<Parameter_StringType> Parameter_StringType { get; set; } = new();
     public List<Metric> Metrics { get; set; } = new();
 
-    public string? ArtifactStoragePath { get; set; } = null;
-    public byte[]? ZipByteArray { get; set; } = Array.Empty<byte>();
+    public string? ArtifactStorageJson { get; set; } = null;
 }

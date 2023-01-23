@@ -7,33 +7,32 @@ namespace PlainML.Infrastructure;
 
 public static class DatabaseExtensionMethods
 {
-    readonly static SqliteConnection _connection = new ("Filename=:memory:");
-
-    public static IServiceCollection UseSqLite(this IServiceCollection services)
+    public static IServiceCollection UsePlainMLSqLite(this IServiceCollection services)
     {
+        SqliteConnection _connection = new ("Filename=:memory:");
         _connection.Open();
         return services.AddDbContextFactory<PlainMLContext>(options => options.UseSqlite(_connection));
     }
 
-    public static IServiceCollection UseInMemoryDatabase(this IServiceCollection services, string databaseName, Action<InMemoryDbContextOptionsBuilder>? inMemoryOptionsAction = null)
+    public static IServiceCollection UsePlainMLInMemoryDatabase(this IServiceCollection services, string databaseName, Action<InMemoryDbContextOptionsBuilder>? inMemoryOptionsAction = null)
     {
-        return services.AddDbContextFactory<PlainMLContext>(options => options.UseInMemoryDatabase(databaseName));
+        return services.AddDbContextFactory<PlainMLContext>(options => options.UseInMemoryDatabase(databaseName, inMemoryOptionsAction));
     }
 
-    public static IServiceCollection UseSQLServer(this IServiceCollection services, string connectionString)
+    public static IServiceCollection UsePlainMLSQLServer(this IServiceCollection services, string connectionString)
     {
         return services.AddDbContextFactory<PlainMLContext>(options => options.UseSqlServer(connectionString));
     }
 
-    public static IServiceCollection UseMySQLServer(this IServiceCollection services)
+    public static IServiceCollection UsePlainMLMySQLServer(this IServiceCollection services)
     {
-        throw new NotImplementedException(nameof(UseMySQLServer));
+        throw new NotImplementedException(nameof(UsePlainMLMySQLServer));
         //TODO: UseMySQLServer
     }
 
-    public static IServiceCollection UsePostgreSQLServer(this IServiceCollection services)
+    public static IServiceCollection UsePlainMLPostgreSQLServer(this IServiceCollection services)
     {
-        throw new NotImplementedException(nameof(UsePostgreSQLServer));
+        throw new NotImplementedException(nameof(UsePlainMLPostgreSQLServer));
         //TODO: UsePostgreSQLServer
     }
 }

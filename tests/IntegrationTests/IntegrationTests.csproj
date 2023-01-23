@@ -23,4 +23,8 @@
     <ProjectReference Include="..\..\src\PlainML.Infrastructure\PlainML.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestFiles/TestFile.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

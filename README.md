@@ -6,14 +6,11 @@ Kurze Beschreibung (TODO)
 ## Features
 
 * Experimenttracking (Parameter, Metrics)
+* Integration of trainingprocesses
 * Deployment to different targets (dev, production)
 * Manage artifacts
 * Artifact/deployment caching
 * Visualization
-
-## Examples
-
-* TODO
 
 ## Getting Started
 
@@ -34,9 +31,22 @@ Kurze Beschreibung (TODO)
     ```
 1. Use UI
 
+## Examples
+
+* watch src/PlainML.Samples/Program.cs
 
 ## NuGet Packages
 
+- https://www.nuget.org/packages/PlainML/
+- https://www.nuget.org/packages/PlainML.Infrastructure/
+- https://www.nuget.org/packages/PlainML.Core/
+
 ## Roadmap
 
+- [ ] Develop unstable version 0.0.*
+- [ ] Create initial stable version 1.0.0
+- [ ] Create docs
+
 ## Contributing
+
+TODO

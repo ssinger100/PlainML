@@ -90,7 +90,7 @@ public class PlainMLService
         }
     }
 
-    public async Task EndRun(int runId, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics)
+    public async Task EndRun(int runId, Parameter[]? parameters, Parameter_StringType[]? parameters_StringType, Metric[]? metrics, string? artifacts_LocalPath)
     {
         if (_stopWatch.IsRunning)
         {
@@ -113,6 +113,11 @@ public class PlainMLService
             if(metrics != null) { run.Metrics.AddRange(metrics); }
 
             await db.SaveChangesAsync();
+
+            if (artifacts_LocalPath != null)
+            {
+                await _artifactStorage.Upload(run, artifacts_LocalPath);
+            }
         }
         else
         {
@@ -174,14 +179,15 @@ public class PlainMLService
 
         db.Set<Deployment>().Add(new()
         {
+            ExperimentId = run.ExperimentId,
             DeploymenttargetId = target.Id,
-            ExperimentId = run.ExperimentId
+            RunId = run.Id
         });
 
         await db.SaveChangesAsync();
     }
 
-    public async Task<Run?> GetDeployedRun(string experimentName, string deploymentTargetName)
+    public async Task<Run?> GetDeployedRun(string experimentName, string deploymentTargetName = "production")
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
         return await db.Set<Deployment>()
@@ -191,7 +197,7 @@ public class PlainMLService
             .FirstOrDefaultAsync();
     }
 
-    public async Task GetArtifacts(int runId, string localpath)
+    public async Task DownloadArtifacts(int runId, string localpath)
     {
         using var db = await _dbContextFactory.CreateDbContextAsync();
         Run run = await db.Set<Run>().FirstAsync(x => x.Id == runId);
