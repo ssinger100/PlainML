@@ -9,6 +9,11 @@
     <Authors>Stefan Singer</Authors>
     <Company>None</Company>
     <Product>PlainML.Core</Product>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
 </Project>
