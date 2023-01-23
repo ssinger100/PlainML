@@ -81,6 +81,29 @@ public class IntegrationTest1
     [TestMethod]
     public async Task GetDeployedRunTest()
     {
+        const string experimentName = "Experiment1";
+
+        var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
+        var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
+        var store = new PlainMLService(dbContextFactory, artifactStorage);
+
+        // Create run and deploy
+        int runId = await store.StartRun(experimentName);
+        await store.EndRun(runId, null, null, null, "./TestFiles/");
+        await store.DeployRun(runId);
+
+        // Create second run
+        runId = await store.StartRun(experimentName);
+        await store.EndRun(runId, null, null, null, "./TestFiles/");
+        // dont deploy
+
+        Run? run = await store.GetDeployedRun(experimentName);
+        Assert.AreEqual(1, run?.Id);
+    }
+
+    [TestMethod]
+    public async Task GetArtifactsfromDeployedRunTest()
+    {
         var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
         var store = new PlainMLService(dbContextFactory, artifactStorage);
