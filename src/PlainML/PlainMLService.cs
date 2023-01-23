@@ -179,8 +179,9 @@ public class PlainMLService
 
         db.Set<Deployment>().Add(new()
         {
+            ExperimentId = run.ExperimentId,
             DeploymenttargetId = target.Id,
-            ExperimentId = run.ExperimentId
+            RunId = run.Id
         });
 
         await db.SaveChangesAsync();
