@@ -19,6 +19,11 @@ public class FilesystemArtifactStorage : IArtifactStorage
             throw new DirectoryNotFoundException();
         }
 
+        if (!Directory.Exists(localpath))
+        {
+            Directory.CreateDirectory(localpath);
+        }
+
         string zipPath = CreateZipPath(run);
         ZipFile.ExtractToDirectory(zipPath, localpath); //TODO: Do it async
 

@@ -7,6 +7,7 @@ using PlainML.Entities;
 using PlainML.Infrastructure;
 using System.IO;
 using System.Linq;
+using System;
 
 namespace IntegrationTests;
 
@@ -36,7 +37,7 @@ public class IntegrationTest1
     [TestMethod]
     public async Task CreateExperimentTest()
     {
-        string experimentName = "TestExperiment1";
+        const string experimentName = "TestExperiment1";
 
         var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
@@ -50,7 +51,7 @@ public class IntegrationTest1
     [TestMethod]
     public async Task StartTrainingTest()
     {
-        string experimentName = "TestExperiment1";
+        const string experimentName = "TestExperiment1";
 
         var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
@@ -104,16 +105,33 @@ public class IntegrationTest1
     [TestMethod]
     public async Task GetArtifactsfromDeployedRunTest()
     {
+        const string experimentName = "Experiment1";
+        const string pathValidation = "./ArtifactsValidation";
+        if(Directory.Exists(pathValidation))
+        {
+            Directory.Delete(pathValidation, true);
+        }
+
         var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
         var store = new PlainMLService(dbContextFactory, artifactStorage);
-        await store.GetDeployedRun("Experiment1");
+
+        // Create run and deploy
+        int runId = await store.StartRun(experimentName);
+        await store.EndRun(runId, null, null, null, "./TestFiles/");
+        await store.DeployRun(runId);
+
+        Run run = await store.GetDeployedRun(experimentName) ?? throw new NullReferenceException();
+        await store.DownloadArtifacts(run.Id, pathValidation);
+
+        int filesCount = Directory.EnumerateFiles(pathValidation).Count();
+        Assert.AreEqual(1, filesCount);
     }
 
     [TestMethod]
     public async Task GetArtifactsTest()
     {
-        string pathValidation = "./ArtifactsValidation";
+        const string pathValidation = "./ArtifactsValidation";
         if(Directory.Exists(pathValidation))
         {
             Directory.Delete(pathValidation, true);
