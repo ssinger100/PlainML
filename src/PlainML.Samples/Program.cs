@@ -21,8 +21,14 @@ await s.EnsureCreated();
 
 int rundId = await s.StartRun(experimentName);
 await Task.Delay(100); // Training...
+string artifactsPath = "./Artifacts";
+if (Directory.Exists(artifactsPath))
+{
+    Directory.Delete(artifactsPath, true);
+}
+Directory.CreateDirectory(artifactsPath);
 await File.WriteAllTextAsync("TestFile.bin", "0011010101001");
-await s.EndRun(rundId, null, null, null, "./Artifacts");
+await s.EndRun(rundId, null, null, null, artifactsPath);
 
 await s.DeployRun(rundId, deploymentTargetName);
 
