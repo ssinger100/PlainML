@@ -44,8 +44,8 @@ Kurze Beschreibung (TODO)
 ## Roadmap
 
 - [ ] Develop unstable version 0.0.*
-- [ ] Create docs
 - [ ] Create initial stable version 1.0.0
+- [ ] Create docs
 
 ## Contributing
 
