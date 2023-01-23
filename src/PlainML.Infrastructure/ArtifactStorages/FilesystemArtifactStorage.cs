@@ -2,10 +2,11 @@ using PlainML.Entities;
 
 namespace PlainML.Infrastructure.ArtifactStorages;
 
-public class FilesystemStorage : IArtifactStorage
+public class FilesystemArtifactStorage : IArtifactStorage
 {
     readonly string _basepath;
-    public FilesystemStorage(string basepath)
+
+    public FilesystemArtifactStorage(string basepath)
     {
         _basepath = basepath;
     }

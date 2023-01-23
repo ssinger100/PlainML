@@ -69,7 +69,7 @@ public class IntegrationTest1
             new(){ Name = "m1", Value = 0.45f }
         };
 
-        await store.EndRun(runId, parameters, null, metrics);
+        await store.EndRun(runId, parameters, null, metrics, null);
 
         Run run = await store.GetRun(runId);
         Assert.AreEqual("p1", run.Parameters[0].Name);
@@ -82,7 +82,7 @@ public class IntegrationTest1
         var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
         var store = new PlainMLService(dbContextFactory, artifactStorage);
-       // store.GetDeployedRun();
+        await store.GetDeployedRun("Experiment1");
     }
 
     [TestMethod]
@@ -94,8 +94,9 @@ public class IntegrationTest1
 
         // Create run
         int runId = await store.StartRun("Test");
-        await store.EndRun(runId, null, null, null);
-        string path = "./Artifacts";
+        await store.EndRun(runId, null, null, null, "Path");
+
+        //string path = "./Artifacts";
         // await store.GetArtifacts(runId, path);
         // int filesCount = Directory.EnumerateFiles(path).Count();
         Assert.Inconclusive();
