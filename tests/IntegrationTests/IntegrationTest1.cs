@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using PlainML.Entities;
 using PlainML.Infrastructure;
+using System.IO;
+using System.Linq;
 
 namespace IntegrationTests;
 
@@ -88,18 +90,23 @@ public class IntegrationTest1
     [TestMethod]
     public async Task GetArtifactsTest()
     {
+        string pathValidation = "./ArtifactsValidation";
+        if(Directory.Exists(pathValidation))
+        {
+            Directory.Delete(pathValidation, true);
+        }
+
         var dbContextFactory = _provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
         var artifactStorage = _provider.GetRequiredService<IArtifactStorage>();
         var store = new PlainMLService(dbContextFactory, artifactStorage);
 
-        // Create run
+        // Create run with artifacts
         int runId = await store.StartRun("Test");
-        await store.EndRun(runId, null, null, null, "Path");
+        await store.EndRun(runId, null, null, null, "./TestFiles/");
 
-        //string path = "./Artifacts";
-        // await store.GetArtifacts(runId, path);
-        // int filesCount = Directory.EnumerateFiles(path).Count();
-        Assert.Inconclusive();
-       // Assert.AreEqual(1, filesCount);
+        await store.DownloadArtifacts(runId, pathValidation);
+
+        int filesCount = Directory.EnumerateFiles(pathValidation).Count();
+        Assert.AreEqual(1, filesCount);
     }
 }
