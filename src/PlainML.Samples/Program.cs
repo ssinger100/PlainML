@@ -43,8 +43,10 @@ async static Task TrainModel(string artifactsPath)
 
     if (Directory.Exists(artifactsPath))
     {
+        Console.WriteLine("Directory exists. Delete it!");
         Directory.Delete(artifactsPath, true);
     }
+
     Directory.CreateDirectory(artifactsPath);
-    await File.WriteAllTextAsync("TestFile.bin", "0011010101001");
+    await File.WriteAllTextAsync(Path.Combine(artifactsPath, "TestFile.bin"), "0011010101001");
 }
