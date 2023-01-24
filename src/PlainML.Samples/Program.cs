@@ -16,7 +16,7 @@ string artifactsPath = "./Artifacts";
 
 // Create database
 PlainMLService s = _provider.GetRequiredService<PlainMLService>();
-await s.EnsureCreated();
+await s.Migrate();
 
 // Train model
 int rundId = await s.StartRun(experimentName);

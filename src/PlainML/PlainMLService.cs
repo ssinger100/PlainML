@@ -16,22 +16,11 @@ public class PlainMLService
         _artifactStorage = artifactStorage;
     }
 
-    public async Task EnsureCreated(CancellationToken token = default)
+    public async Task Migrate(CancellationToken token = default)
     {
         using var context = await _dbContextFactory.CreateDbContextAsync(token);
         await context.Database.EnsureCreatedAsync(token);
-     //   Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate();
-     //   context.Database.Migrate();
-    }
-
-    public Task Migrate(CancellationToken token = default)
-    {
-        // using var context = await _dbContextFactory.CreateDbContextAsync(token);
-        // await context.Database.EnsureCreatedAsync(token);
-        // Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate();
-        // context.Database.Migrate();
-
-        throw new NotImplementedException(nameof(Migrate));
+        await context.Database.MigrateAsync(token);
     }
 
     public async Task<Experiment> GetOrCreateExperiment(string experimentName)
