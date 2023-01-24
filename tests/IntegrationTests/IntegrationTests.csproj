@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PlainML.Core\PlainML.Core.csproj" />
     <ProjectReference Include="..\..\src\PlainML\PlainML.csproj" />
     <ProjectReference Include="..\..\src\PlainML.Infrastructure\PlainML.Infrastructure.csproj" />
   </ItemGroup>
