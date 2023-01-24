@@ -28,9 +28,7 @@ public class IntegrationTest1
         context.Database.Migrate();
 
         var artifactStorage = provider.GetRequiredService<IArtifactStorage>();
-        var s = new PlainMLService(dbContextFactory, artifactStorage);
-
-        return s;
+        return new PlainMLService(dbContextFactory, artifactStorage);
     }
 
     [TestMethod]
