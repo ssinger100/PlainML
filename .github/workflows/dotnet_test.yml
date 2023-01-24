@@ -13,11 +13,8 @@ env:
 
 jobs:
   build:
-    name: ${{matrix.framework}}-build
+    name: test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        framework: [net6.0, net7.0]
     steps:
     - uses: actions/checkout@v3
 
@@ -31,7 +28,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/master'
-    name: ${{matrix.framework}}-deploy
+    name: deploy
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -42,14 +39,11 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Build
-      run: dotnet build --configuration Release -f ${{ matrix.framework }}
-
     - name: Create nuget packages
       run: |
-        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} -p:TargetFrameworks=net6.0,net7.0 \
-        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} -p:TargetFrameworks=net6.0,net7.0 \
-        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --no-build --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} -p:TargetFrameworks=net6.0,net7.0
+        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
 
 
     - name: Push nuget packages
