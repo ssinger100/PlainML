@@ -3,6 +3,8 @@
 
 Kurze Beschreibung (TODO)
 
+[![build](https://github.com/ssinger100/PlainML/actions/workflows/dotnet_test.yml/badge.svg?branch=master)](https://github.com/ssinger100/PlainML/actions/workflows/dotnet_test.yml)
+
 ## Features
 
 * Experimenttracking (Runs with parameters, metrics and artifacts)
