@@ -5,11 +5,10 @@ Kurze Beschreibung (TODO)
 
 ## Features
 
-* Experimenttracking (Parameter, Metrics)
+* Experimenttracking (Runs with parameters, metrics and artifacts)
 * Integration of trainingprocesses
 * Deployment to different targets (dev, production)
-* Manage artifacts
-* Artifact/deployment caching
+* Manage artifacts (deployment, caching)
 * Visualization
 
 ## Getting Started
@@ -46,6 +45,8 @@ Kurze Beschreibung (TODO)
 - [ ] Develop unstable version 0.0.*
 - [ ] Create initial stable version 1.0.0
 - [ ] Create docs
+- [ ] Rest-interface
+- [ ] Web-interface for visualization and Manage Experiments (run-table, graphs,...) 
 
 ## Contributing
 
