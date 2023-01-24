@@ -13,11 +13,8 @@ env:
 
 jobs:
   build:
-    name: ${{matrix.framework}}-build
+    name: test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        framework: [net6.0, net7.0]
     steps:
     - uses: actions/checkout@v3
 
@@ -31,7 +28,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/master'
-    name: ${{matrix.framework}}-deploy
+    name: deploy
     needs: build
     runs-on: ubuntu-latest
     steps:
