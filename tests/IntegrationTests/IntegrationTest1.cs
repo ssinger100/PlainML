@@ -23,12 +23,11 @@ public class IntegrationTest1
             .BuildServiceProvider();
 
         var dbContextFactory = provider.GetRequiredService<IDbContextFactory<PlainMLContext>>();
-        using var context = await dbContextFactory.CreateDbContextAsync();
-        context.Database.EnsureCreated();
-        context.Database.Migrate();
-
         var artifactStorage = provider.GetRequiredService<IArtifactStorage>();
-        return new PlainMLService(dbContextFactory, artifactStorage);
+
+        var s = new PlainMLService(dbContextFactory, artifactStorage);
+        await s.Migrate();
+        return s;
     }
 
     [TestMethod]

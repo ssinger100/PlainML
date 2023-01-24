@@ -26,6 +26,11 @@ Kurze Beschreibung (TODO)
     ```
     dotnet add package PlainML.Infrastructure
     ```
+1. Apply migration when a new major version is avaiable
+    ```
+    var s = new PlainMLService(dbContextFactory, artifactStorage);
+    await s.Migrate();
+    ```
 1. Use code
     ```
     TODO: example code
@@ -48,7 +53,7 @@ Kurze Beschreibung (TODO)
 - [ ] Create initial stable version 1.0.0
 - [ ] Create docs
 - [ ] Rest-interface
-- [ ] Web-interface for visualization and Manage Experiments (run-table, graphs,...) 
+- [ ] Web-interface for visualization and Manage Experiments (run-table, graphs,...)
 
 ## Contributing
 
