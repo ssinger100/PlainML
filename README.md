@@ -100,7 +100,7 @@ This library should simplify the tracking process of Machine-Learning (ML) train
 
 ## Examples
 
-* src/PlainML.Samples/Program.cs
+* [src/PlainML.Samples/Program.cs](https://github.com/ssinger100/PlainML/blob/master/src/PlainML.Samples/Program.cs)
 
 ## NuGet Packages
 
