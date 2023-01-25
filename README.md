@@ -112,6 +112,7 @@ This library should simplify the tracking process of Machine-Learning (ML) train
 
 - [ ] Develop unstable version 0.0.*
 - [ ] Create initial stable version 1.0.0
+- [ ] ML.Net integration
 - [ ] Create docs
 - [ ] Rest-interface
 - [ ] Web-interface for visualization and Manage Experiments (run-table, graphs,...)
