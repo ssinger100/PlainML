@@ -64,7 +64,7 @@ This library should simplify the tracking process of Machine-Learning (ML) train
         rundId,
         parameters: new[] { new Parameter(){ Name = "Parameter1", Value = 1.123f } },
         parameters_StringType: new[] { new Parameter_StringType(){ Name = "Trainers", Value = "LightGbm, OneVersusAllTrainer" } },
-        metrics: new[] { new Metric(){ Name = "Trainers", Value = metricValue } },
+        metrics: new[] { new Metric(){ Name = "MicroAccuracy", Value = metricValue } },
         artifactsPath);
 
     // Deploy model
@@ -100,7 +100,7 @@ This library should simplify the tracking process of Machine-Learning (ML) train
 
 ## Examples
 
-* src/PlainML.Samples/Program.cs
+* [src/PlainML.Samples/Program.cs](https://github.com/ssinger100/PlainML/blob/master/src/PlainML.Samples/Program.cs)
 
 ## NuGet Packages
 
@@ -112,6 +112,7 @@ This library should simplify the tracking process of Machine-Learning (ML) train
 
 - [ ] Develop unstable version 0.0.*
 - [ ] Create initial stable version 1.0.0
+- [ ] ML.Net integration
 - [ ] Create docs
 - [ ] Rest-interface
 - [ ] Web-interface for visualization and Manage Experiments (run-table, graphs,...)
