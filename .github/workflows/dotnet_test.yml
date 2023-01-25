@@ -10,6 +10,7 @@ on:
 
 env:
   DOTNET_VERSION: '7.0.x' # The .NET SDK version to use
+  SoftwareVersion: 0.1.${{ github.run_number }}
 
 jobs:
   build:
@@ -28,9 +29,9 @@ jobs:
 
     - name: Create nuget packages
       run: |
-        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }}
+        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=${{ env.SoftwareVersion }} \
+        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=${{ env.SoftwareVersion }} \
+        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=${{ env.SoftwareVersion }}
 
   deploy:
     if: github.ref == 'refs/heads/master'
@@ -47,9 +48,9 @@ jobs:
 
     - name: Create nuget packages
       run: |
-        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }}
+        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=${{ env.SoftwareVersion }} \
+        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=${{ env.SoftwareVersion }} \
+        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=${{ env.SoftwareVersion }}
 
 
     - name: Push nuget packages
