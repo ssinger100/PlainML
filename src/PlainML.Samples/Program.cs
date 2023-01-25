@@ -40,8 +40,6 @@ foreach (var item in Directory.EnumerateFiles("./DownloadedArtifacts"))
     Console.WriteLine(item);
 }
 
-
-
 async static Task<float> TrainModel(string artifactsPath)
 {
     Console.WriteLine("Training...");
