@@ -17,7 +17,7 @@ public class IntegrationTest1
     public async static Task<PlainMLService> GetPlainMLService()
     {
         IServiceProvider provider = new ServiceCollection()
-            .UsePlainMLSqLite()
+            .UsePlainMLSqLiteInMemory()
             .UseArtifactStorageFilesystem()
             .AddTransient<PlainMLService>()
             .BuildServiceProvider();

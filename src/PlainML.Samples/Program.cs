@@ -5,8 +5,8 @@ using PlainML.Infrastructure;
 
 // Use dependency injection to configure database and artifact storage
 var _provider = new ServiceCollection()
-            .UsePlainMLSqLite()
-            .UseArtifactStorageFilesystem()
+            .UsePlainMLSqLiteLocalFile("./PlainML_SqLite.db")
+            .UseArtifactStorageFilesystem("./PlainML/Storage/")
             .AddTransient<PlainMLService>()
             .BuildServiceProvider();
 
