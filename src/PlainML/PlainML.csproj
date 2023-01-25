@@ -8,7 +8,7 @@
 
     <Product>PlainML</Product>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Description>Something I decided to release on NuGet.</Description>
+    <Description>This library should simplify the tracking process of Machine-Learning training tasks.</Description>
     <PackageTags>ML;KI;MLOps;</PackageTags>
     <Authors>Stefan Singer</Authors>
     <PackageProjectUrl>https://github.com/ssinger100/PlainML</PackageProjectUrl>
