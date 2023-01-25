@@ -64,7 +64,7 @@ This library should simplify the tracking process of Machine-Learning (ML) train
         rundId,
         parameters: new[] { new Parameter(){ Name = "Parameter1", Value = 1.123f } },
         parameters_StringType: new[] { new Parameter_StringType(){ Name = "Trainers", Value = "LightGbm, OneVersusAllTrainer" } },
-        metrics: new[] { new Metric(){ Name = "Trainers", Value = metricValue } },
+        metrics: new[] { new Metric(){ Name = "MicroAccuracy", Value = metricValue } },
         artifactsPath);
 
     // Deploy model
