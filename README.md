@@ -15,27 +15,88 @@ Kurze Beschreibung (TODO)
 
 ## Getting Started
 
-1. Install VSCode
-1. Install C# extensions for VSCode
+1. [Install VSCode](https://code.visualstudio.com/)
+1. [Install C# extensions for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
 1. Create project
-1. Install nuget package to project:
+    ```
+    mkdir PlainMLExample
+    cd PlainMLExample
+    dotnet new console
+    ```
+1. Install nuget package to project
     ```
     dotnet add package PlainML
-    ```
-1. Database and artifactstorage configuration with dependency injection:
-    ```
     dotnet add package PlainML.Infrastructure
     ```
-1. Apply migration when a new major version is avaiable
+1. Add usings on the top of program.cs-File
+    ```
+    using Microsoft.Extensions.DependencyInjection;
+    using PlainML;
+    using PlainML.Entities;
+    using PlainML.Infrastructure;
+    ```
+1. Use dependency injection to configure services
+    ```
+    var _provider = new ServiceCollection()
+        .UsePlainMLSqLite()  // other providers like SQL-Server are avaiable
+        .UseArtifactStorageFilesystem() // other providers like SQL-Server are avaiable
+        .AddTransient<PlainMLService>()
+        .BuildServiceProvider();
+    ```
+1. Apply migration when init the database the first time or a new major version is avaiable
     ```
     var s = new PlainMLService(dbContextFactory, artifactStorage);
     await s.Migrate();
     ```
 1. Use code
     ```
-    TODO: example code
+    const string experimentName = "TestExperiment";
+    const string artifactsPath = "./Artifacts";
+
+    // Create database
+    PlainMLService s = _provider.GetRequiredService<PlainMLService>();
+    await s.Migrate();
+
+    // Train model
+    int rundId = await s.StartRun(experimentName);
+    float metricValue = await TrainModel(artifactsPath);
+    await s.EndRun(
+        rundId,
+        parameters: new[] { new Parameter(){ Name = "Parameter1", Value = 1.123f } },
+        parameters_StringType: new[] { new Parameter_StringType(){ Name = "Trainers", Value = "LightGbm, OneVersusAllTrainer" } },
+        metrics: new[] { new Metric(){ Name = "Trainers", Value = metricValue } },
+        artifactsPath);
+
+    // Deploy model
+    await s.DeployRun(rundId);
+
+    // Use model
+    var deployedRun = await s.GetDeployedRun(experimentName) ?? throw new NullReferenceException();
+    await s.DownloadArtifacts(deployedRun.Id, "./DownloadedArtifacts");
+
+    Console.WriteLine("Artifacts of run in ./DownloadedArtifacts:");
+    foreach (var item in Directory.EnumerateFiles("./DownloadedArtifacts"))
+    {
+        Console.WriteLine(item);
+    }
+
+    async static Task<float> TrainModel(string artifactsPath)
+    {
+        Console.WriteLine("Training...");
+        await Task.Delay(100);
+
+        if (Directory.Exists(artifactsPath))
+        {
+            Console.WriteLine("Directory exists. Delete it!");
+            Directory.Delete(artifactsPath, true);
+        }
+
+        Directory.CreateDirectory(artifactsPath);
+        await File.WriteAllTextAsync(Path.Combine(artifactsPath, "TestFile.bin"), "0011010101001");
+
+        return 0.1f;
+    }
     ```
-1. Use UI
 
 ## Examples
 
