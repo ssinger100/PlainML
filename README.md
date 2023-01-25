@@ -1,7 +1,7 @@
 
 # PlainML
 
-Kurze Beschreibung (TODO)
+This library should simplify the tracking process of Machine-Learning (ML) training tasks. When you train a ML-model you can save parameters and metrics of the training attempts (named as "runs"). Also you can store artifacts and deploy it to a deploymenttarget like "dev" or "prod". On this way you can access them on an client application the deployed model.
 
 [![build](https://github.com/ssinger100/PlainML/actions/workflows/dotnet_test.yml/badge.svg?branch=master)](https://github.com/ssinger100/PlainML/actions/workflows/dotnet_test.yml)
 
@@ -100,7 +100,7 @@ Kurze Beschreibung (TODO)
 
 ## Examples
 
-* watch src/PlainML.Samples/Program.cs
+* src/PlainML.Samples/Program.cs
 
 ## NuGet Packages
 
@@ -115,7 +115,3 @@ Kurze Beschreibung (TODO)
 - [ ] Create docs
 - [ ] Rest-interface
 - [ ] Web-interface for visualization and Manage Experiments (run-table, graphs,...)
-
-## Contributing
-
-TODO
