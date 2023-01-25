@@ -6,11 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <Authors>Stefan Singer</Authors>
-    <Company>None</Company>
     <Product>PlainML</Product>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Description>Something I decided to release on NuGet.</Description>
+    <PackageTags>my;project;whatever;</PackageTags>
+    <Authors>Stefan Singer</Authors>
+    <RepositoryUrl>https://github.com/ssinger100/PlainML</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/ssinger100/PlainML/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/ssinger100/PlainML</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +31,6 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
-    <None Include="..\..\LICENSE" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
 
 </Project>
