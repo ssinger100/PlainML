@@ -9,11 +9,11 @@
     <Product>PlainML</Product>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Description>Something I decided to release on NuGet.</Description>
-    <PackageTags>my;project;whatever;</PackageTags>
+    <PackageTags>ML;KI;MLOps;</PackageTags>
     <Authors>Stefan Singer</Authors>
+    <PackageProjectUrl>https://github.com/ssinger100/PlainML</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ssinger100/PlainML</RepositoryUrl>
     <license>https://github.com/ssinger100/PlainML/blob/master/LICENSE</license>
-    <PackageProjectUrl>https://github.com/ssinger100/PlainML</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
