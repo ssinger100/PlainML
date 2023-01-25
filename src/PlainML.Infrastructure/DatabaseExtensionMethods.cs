@@ -7,9 +7,17 @@ namespace PlainML.Infrastructure;
 
 public static class DatabaseExtensionMethods
 {
-    public static IServiceCollection UsePlainMLSqLite(this IServiceCollection services)
+    public static IServiceCollection UsePlainMLSqLiteInMemory(this IServiceCollection services)
     {
         SqliteConnection _connection = new ("Filename=:memory:");
+        _connection.Open();
+        return services.AddDbContextFactory<PlainMLContext>(options => options.UseSqlite(_connection));
+    }
+
+    public static IServiceCollection UsePlainMLSqLiteLocalFile(this IServiceCollection services, string? filepath = null)
+    {
+        filepath ??= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) , "PlainML_SqLite.db");
+        SqliteConnection _connection = new ($"Data Source={filepath}");
         _connection.Open();
         return services.AddDbContextFactory<PlainMLContext>(options => options.UseSqlite(_connection));
     }

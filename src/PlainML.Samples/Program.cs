@@ -1,18 +1,17 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PlainML;
+using PlainML.Entities;
 using PlainML.Infrastructure;
-
-Console.WriteLine("Hello, World!");
 
 // Use dependency injection to configure database and artifact storage
 var _provider = new ServiceCollection()
-            .UsePlainMLSqLite()
-            .UseArtifactStorageFilesystem()
+            .UsePlainMLSqLiteLocalFile("./PlainML_SqLite.db")
+            .UseArtifactStorageFilesystem("./PlainML/Storage/")
             .AddTransient<PlainMLService>()
             .BuildServiceProvider();
 
-string experimentName = "TestExperiment";
-string artifactsPath = "./Artifacts";
+const string experimentName = "TestExperiment";
+const string artifactsPath = "./Artifacts";
 
 // Create database
 PlainMLService s = _provider.GetRequiredService<PlainMLService>();
@@ -20,8 +19,13 @@ await s.Migrate();
 
 // Train model
 int rundId = await s.StartRun(experimentName);
-await TrainModel(artifactsPath);
-await s.EndRun(rundId, null, null, null, artifactsPath);
+float metricValue = await TrainModel(artifactsPath);
+await s.EndRun(
+    rundId,
+    parameters: new[] { new Parameter(){ Name = "Parameter1", Value = 1.123f } },
+    parameters_StringType: new[] { new Parameter_StringType(){ Name = "Trainers", Value = "LightGbm, OneVersusAllTrainer" } },
+    metrics: new[] { new Metric(){ Name = "Trainers", Value = metricValue } },
+    artifactsPath);
 
 // Deploy model
 await s.DeployRun(rundId);
@@ -30,13 +34,13 @@ await s.DeployRun(rundId);
 var deployedRun = await s.GetDeployedRun(experimentName) ?? throw new NullReferenceException();
 await s.DownloadArtifacts(deployedRun.Id, "./DownloadedArtifacts");
 
-Console.WriteLine("Files in ./DownloadedArtifacts:");
+Console.WriteLine("Artifacts of run in ./DownloadedArtifacts:");
 foreach (var item in Directory.EnumerateFiles("./DownloadedArtifacts"))
 {
     Console.WriteLine(item);
 }
 
-async static Task TrainModel(string artifactsPath)
+async static Task<float> TrainModel(string artifactsPath)
 {
     Console.WriteLine("Training...");
     await Task.Delay(100);
@@ -49,4 +53,6 @@ async static Task TrainModel(string artifactsPath)
 
     Directory.CreateDirectory(artifactsPath);
     await File.WriteAllTextAsync(Path.Combine(artifactsPath, "TestFile.bin"), "0011010101001");
+
+    return 0.1f;
 }

@@ -7,7 +7,7 @@ public static class ArtifactStorageExtensionMethods
 {
     public static IServiceCollection UseArtifactStorageFilesystem(this IServiceCollection services, string? directory = null)
     {
-        directory ??= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ML-Tackingstore", "Storage");
+        directory ??= Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "PlainML", "Storage");
         return services.AddTransient<IArtifactStorage>(x => new FilesystemArtifactStorage(directory));
     }
 
