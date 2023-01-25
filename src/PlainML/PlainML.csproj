@@ -12,7 +12,7 @@
     <PackageTags>my;project;whatever;</PackageTags>
     <Authors>Stefan Singer</Authors>
     <RepositoryUrl>https://github.com/ssinger100/PlainML</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/ssinger100/PlainML/blob/master/LICENSE</PackageLicenseUrl>
+    <license>https://github.com/ssinger100/PlainML/blob/master/LICENSE</license>
     <PackageProjectUrl>https://github.com/ssinger100/PlainML</PackageProjectUrl>
   </PropertyGroup>
 
