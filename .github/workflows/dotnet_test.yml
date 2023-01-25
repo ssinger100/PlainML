@@ -28,9 +28,9 @@ jobs:
 
     - name: Create nuget packages
       run: |
-        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
+        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }}
 
   deploy:
     if: github.ref == 'refs/heads/master'
@@ -47,9 +47,9 @@ jobs:
 
     - name: Create nuget packages
       run: |
-        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }} \
-        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=0.0.${{ github.run_number }}
+        dotnet pack ./src/PlainML/PlainML.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Core/PlainML.Core.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }} \
+        && dotnet pack ./src/PlainML.Infrastructure/PlainML.Infrastructure.csproj --configuration Release --output nupkgs -p:PackageVersion=0.1.${{ github.run_number }}
 
 
     - name: Push nuget packages
