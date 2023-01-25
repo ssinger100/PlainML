@@ -110,7 +110,7 @@ This library should simplify the tracking process of Machine-Learning (ML) train
 
 ## Roadmap
 
-- [ ] Develop unstable version 0.0.*
+- [x] Develop unstable version 0.1.*
 - [ ] Create initial stable version 1.0.0
 - [ ] ML.Net integration
 - [ ] Create docs
